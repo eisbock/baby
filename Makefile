@@ -1,5 +1,7 @@
 all: baby_test libbaby.a
 
+test: baby_test
+
 clean:
 	rm -f baby_test libbaby.a *.o
 
