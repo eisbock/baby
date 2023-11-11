@@ -1,3 +1,7 @@
+// See baby.h for code docs
+//
+// Copyright 2023 Jesse Dutton
+
 #include "baby.h"
 
 

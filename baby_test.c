@@ -1,3 +1,5 @@
+// Copyright 2023 Jesse Dutton
+//
 // Attempt to find r such that 2**(n-2r+1) == 1 mod n, using the baby-step
 // giant-step algorithm and the baby data structure implemented in this repo.
 //
@@ -6,7 +8,7 @@
 // just algebra. We use the algorithm for the discrete log part, and test the
 // baby data structure as we iterate.
 //
-// gcc -Wall baby_test.c baby.c -lgmp
+// make test
 
 #include <stdio.h>
 #include "baby.h"

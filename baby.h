@@ -1,5 +1,7 @@
 // baby.h
 //
+// Copyright 2023 Jesse Dutton
+//
 // This creates a hashtable of small numbers in the ring (a**i % n)
 // You lookup the modular values to find the offset that created it.
 // Intended for use in a baby-step giant-step algorithm, although I would be
