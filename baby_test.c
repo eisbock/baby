@@ -13,13 +13,13 @@
 #include <stdio.h>
 #include "baby.h"
 
-#define IDX_SZ 16384
-#define GIANT_SZ 65536
 
 int main(int argc, char **argv) {
   struct baby *b;
   mpz_t n, r, giant, m, two;
   unsigned long off;
+  unsigned long idx_sz = 16384;
+  unsigned long giant_sz = 65536;
 
   if (argc > 2) {
     printf("Usage:  %s [num]\n", argv[0]);
@@ -30,6 +30,14 @@ int main(int argc, char **argv) {
     mpz_init_set_str(n, "491020194313983920358193", 0);
     printf("r=712465681567 (expected)\n");
   }
+
+  // make sure we don't overstep with very small n
+  if (mpz_cmp_ui(n, giant_sz) < 0) {
+    giant_sz = mpz_get_ui(n) -1;
+    idx_sz = giant_sz / 4;
+  }
+
+  // init
   mpz_inits(r, giant, m, two, NULL);
   mpz_set_ui(two, 2);
 
@@ -44,15 +52,15 @@ int main(int argc, char **argv) {
   mpz_powm(m, two, m, n);
 
   // giant step
-  mpz_set_si(giant, -2*GIANT_SZ);
+  mpz_set_si(giant, -2*giant_sz);
   mpz_powm(giant, two, giant, n);
 
   // make the baby
-  b = baby_make(n, 2, 2, GIANT_SZ, IDX_SZ);
+  b = baby_make(n, 2, 2, giant_sz, idx_sz);
 
   // baby-step giant-step algo
   while (baby_lookup(&off, b, m) == 0) {
-    mpz_add_ui(r, r, GIANT_SZ);
+    mpz_add_ui(r, r, giant_sz);
     mpz_mul(m, m, giant);
     mpz_mod(m, m, n);
   }

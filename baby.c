@@ -53,12 +53,12 @@ struct baby * baby_make(const mpz_t n,
   mpz_init_set_ui(b->a, a);
   mpz_init(b->scratch);
 
-  // populate
-  for (i = 0; i < num_items; i++) {
+  // populate backwards, so that small numbers are found first
+  for (i = num_items -1; i >0; i--) {
     mpz_powm_ui(b->scratch, b->a, step*i, b->n);
     j = mpz_get_ui(b->scratch);
     j = j % b->idx_size;
-    
+
     b->items[i].next = b->idx[j];
     b->items[i].offset = i;
     b->idx[j] = b->items + i;
